@@ -2,7 +2,7 @@
 
 ![The car screen as a Mac display: a window is dragged onto it, then scrolled with a finger](docs/media/demo.webp)
 
-*Real speed, no edits: a Safari window dragged onto the screen, then scrolled with a finger.
+*Real speed (two clips joined, nothing sped up): a browser window dragged onto the screen, then scrolled with a finger.
 [Longer video (53 s)](docs/media/demo.mp4): boot → desktop appears → drag → touch scrolling.*
 
 An inexpensive aftermarket "CarPlay" car screen, re-flashed so that it works as a **real extended display for a Mac**,
