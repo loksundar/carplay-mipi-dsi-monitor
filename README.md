@@ -34,6 +34,29 @@ What you get:
 ```
 Full explanation: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**.
 
+## Problems this solves
+- Using a **car CarPlay / Android Auto screen as a second monitor** for a Mac (or as a "mini display" / touch bar).
+- A **MIPI DSI panel with no HDMI input**: driving it from a computer without a DSI bridge board.
+- Reusing a cheap **Allwinner V831 / sun8iw19** device: dumping, unpacking and re-flashing its SPI NOR firmware,
+  including the vendor-modified squashfs, and **software FEL** entry so the case can stay closed.
+- A **USB-C network link (CDC-NCM gadget)** from an embedded Linux board to macOS with no driver.
+- **macOS virtual display + touch**: `CGVirtualDisplay` + ScreenCaptureKit streaming, with GT911 touch mapped to
+  clicks, drags, right-clicks and scrolling.
+
+## Chip and board details
+| Part | Detail |
+|---|---|
+| SoC | **Allwinner V831** (sun8iw19p1), single **ARM Cortex-A7** @ 1 GHz, NEON, G2D 2D engine |
+| RAM | 128 MB (~122 MB visible to Linux, ~86 MB free while running) |
+| Storage | 16 MB **SPI NOR** flash (boot0 + U-Boot, kernel, squashfs rootfs, 512 KB jffs2 overlay) |
+| OS | Allwinner **Tina Linux** (OpenWrt-based), kernel **4.9.118**, BusyBox |
+| Display | **MIPI DSI**, 4 lanes, RGB888, 600x1600 portrait panel; `/dev/fb0` is 1600x600 BGRA, rotated by G2D |
+| Touch | **Goodix GT911** capacitive, I2C bus 3 @ 0x5d, driver `gt9xxnew_ts`, multitouch protocol A |
+| WiFi | **AP6334** module (Broadcom **BCM4334**), `bcmdhd` driver, station mode |
+| USB | USB-C **OTG** (sunxi `usbc0`, UDC `5100000.udc-controller`), used as a configfs **CDC-NCM** gadget |
+| Flashing | **FEL** mode via [xfel](https://github.com/xboot/xfel): hardware (flash CLK→GND) or software (RTC GPR2 magic `0x5AA5A55A`) |
+| Stock software | `sdvcam` / `lylinkapp` (wireless CarPlay + Android Auto), removed by `strip.sh` |
+
 ## Hardware
 Tested on a 10.26" 1600x600 "wireless CarPlay / Android Auto" screen built around an **Allwinner V831**
 (sun8iw19p1: one Cortex-A7 at 1 GHz, 128 MB RAM, 16 MB SPI NOR, AP6334 WiFi, GT911 touch, USB-C OTG) with a
