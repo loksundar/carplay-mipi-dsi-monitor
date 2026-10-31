@@ -1,0 +1,24 @@
+#!/bin/sh
+# Replacement for the stock S01app (which launched sdvcam/CarPlay): extended display only.
+
+start() {
+	echo performance > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+	# Enable the RTC 32kHz clock output the WiFi module needs (stock did this in
+	# bluetooth_init.sh). RTC registers survive warm resets, so without this only
+	# cold boots fail.
+	echo 0x07000060 1 > /sys/class/sunxi_dump/write
+	# The hardware watchdog (16s) is armed at boot and nothing else feeds it.
+	watchdog -t 2 /dev/watchdog
+	/usr/bin/dash_start.sh &
+}
+
+stop() {
+	killall dash_start.sh vdclient
+}
+
+case "$1" in
+	start) start ;;
+	stop) stop ;;
+	restart|reload) stop; start ;;
+	*) echo "Usage: $0 {start|stop|restart}"; exit 1 ;;
+esac

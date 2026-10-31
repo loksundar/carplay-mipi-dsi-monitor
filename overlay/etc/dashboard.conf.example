@@ -1,0 +1,4 @@
+SSID="YourHomeWiFi"
+PSK="your-wifi-password"
+SERVER="192.168.1.50"   # the Mac's WiFi IP (the board dials it)
+PORT=8090

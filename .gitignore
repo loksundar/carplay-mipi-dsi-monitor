@@ -1,0 +1,34 @@
+# local configuration and secrets
+config.env
+overlay/etc/dashboard.conf
+# build outputs and binaries
+build/
+*.sqsh
+*.bin
+*.raw
+device/vdclient
+device/httpc
+device/devmem
+device/evinject
+device/i2cscan
+device/pantest
+overlay/usr/bin/vdclient
+overlay/usr/bin/httpc
+overlay/usr/bin/devmem
+mac/vdisplay
+mac/permcheck
+mac/helpers/conntest
+mac/helpers/evlog
+mac/helpers/modes
+mac/helpers/mousepos
+mac/helpers/place
+# runtime state
+*.log
+server/cmd.sh
+server/cmd.sh.sent
+server/cmd.sh.tmp
+server/files/
+server/uploads/
+__pycache__/
+.venv/
+.DS_Store
